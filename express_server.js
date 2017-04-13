@@ -1,9 +1,12 @@
 const express = require("express");
+const cookieParser = require('cookie-parser')
+const bodyParser = require("body-parser");
+
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser())
 app.set("view engine", "ejs");
 
 let urlDatabase = {
@@ -38,20 +41,23 @@ app.get("/hello", (req,res) => {
 
 //express get when we hits url '/urls'
 app.get("/urls", (req,res) => {
-  let templateVars = {urls : urlDatabase };
+  let templateVars = {  username : req.cookies["username"],
+                        urls : urlDatabase };
   res.render('urls_index', templateVars);
 });
 
 // express get when client hit url '/urls/new'
 app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
+  let username = { username : req.cookies["username"]};
+  res.render("urls_new", username);
 });
 
 // express get when client hit url '/urls/shortlink'
 app.get("/urls/:id", (req, res) => {
   //templateVars contains shortURL from request parameters and corresponding
   //longURL from urlDatabase.
-  let templateVars = { shortURL: req.params.id,
+  let templateVars = {  username : req.cookies["username"],
+                        shortURL: req.params.id,
                         lURL:urlDatabase[req.params.id]
                       };
   // renders urls_show to webbrowser with templateVars.
@@ -91,6 +97,18 @@ app.post("/urls/:id", (req, res) => {
   console.log(newURL);
   urlDatabase[req.params.id] = newURL;
   res.redirect('/urls');
+});
+
+app.post("/login", (req, res) => {
+  console.log(req.body.userName);
+  res.cookie("username",req.body.userName);
+  res.redirect("/");
+});
+
+app.post("/logout", (req, res) => {
+  res.clearCookie('username');
+  //res.cookie("username",req.body.userName);
+  res.redirect("/");
 });
 
 app.listen(PORT, () => {

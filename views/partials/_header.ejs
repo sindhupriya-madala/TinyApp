@@ -1,1 +1,21 @@
-<h1> This is Header </h1>
+<html>
+  <head>
+    <title> Login Page </title>
+  </head>
+  <body>
+    <h1> This is Header </h1>
+    <% if(username) { %>
+      <form action="/logout" method="POST" style="margin:20px">
+        <%= username %>
+        <button id="logout"> Logout </button>
+      </form>
+    <% } else { %>
+      <form action="/login" method="POST" style="margin:20px">
+        <label for="userName">Enter UserName : </label>
+        <input id="userName" type="text" name="userName" placeholder="username" style="width : 130px">
+        <button id="submit"> Submit </button>
+        <%= username %>
+      </form>
+    <% } %>
+  </body>
+</html>
