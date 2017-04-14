@@ -7,6 +7,11 @@ const PORT = process.env.PORT || 8080;
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser())
+app.use((req, res, next) => {
+  const userId = req.cookies.user_id;
+  req.user = users[userId];
+  next();
+})
 app.set("view engine", "ejs");
 
 let urlDatabase = {
@@ -14,6 +19,18 @@ let urlDatabase = {
   "9sm5xK": "http://www.google.com"
 };
 
+const users = {
+  "userRandomID": {
+    id: "userRandomID",
+    email: "user@example.com",
+    password: "purple-monkey-dinosaur"
+  },
+ "user2RandomID": {
+    id: "user2RandomID",
+    email: "user2@example.com",
+    password: "dishwasher-funk"
+  }
+}
 //function for generating string of 6 random characters.
 function generateRandomString() {
 var text = "";
@@ -41,22 +58,24 @@ app.get("/hello", (req,res) => {
 
 //express get when we hits url '/urls'
 app.get("/urls", (req,res) => {
-  let templateVars = {  username : req.cookies["username"],
-                        urls : urlDatabase };
-  res.render('urls_index', templateVars);
+  let passData = {
+                    user : req.user,
+                    urls : urlDatabase
+                  };
+  res.render('urls_index', {user: req.user, urls: urlDatabase});
 });
 
 // express get when client hit url '/urls/new'
 app.get("/urls/new", (req, res) => {
-  let username = { username : req.cookies["username"]};
-  res.render("urls_new", username);
+  // let user = { user : users[req.cookies.user_id]};
+  res.render("urls_new", { user: req.user });
 });
 
 // express get when client hit url '/urls/shortlink'
 app.get("/urls/:id", (req, res) => {
   //templateVars contains shortURL from request parameters and corresponding
   //longURL from urlDatabase.
-  let templateVars = {  username : req.cookies["username"],
+  let templateVars = {  user : users[req.cookies.user_id],
                         shortURL: req.params.id,
                         lURL:urlDatabase[req.params.id]
                       };
@@ -74,7 +93,6 @@ app.post("/abcd", (req, res) => {
   }
   urlDatabase[shortURL] = longURL;
   console.log(`iam here : /u/${shortURL}`);
-  //res.redirect(`${longURL}`);
   res.redirect(`/urls/${shortURL}`);
 });
 
@@ -87,7 +105,7 @@ app.get("/u/:shortURL", (req, res) => {
 //POST for deleting a url from urls page.
 app.post("/urls/:id/delete", (req, res) => {
   let key = req.params.id;
-  consolreq.body
+  //consolreq.body
   delete urlDatabase[key];
   res.redirect('/urls');
 });
@@ -99,16 +117,67 @@ app.post("/urls/:id", (req, res) => {
   res.redirect('/urls');
 });
 
+app.get("/login", (req, res) => {
+  console.log("hello in login get");
+  res.render("login.ejs");
+});
+
 app.post("/login", (req, res) => {
-  console.log(req.body.userName);
-  res.cookie("username",req.body.userName);
+  const { email, password } = req.body;
+  if(email && password) {
+    for (user in users) {
+      if (users[user].email === email) {
+        if(users[user].password === password){
+          res.cookie("user_id",users[user].id);
+          res.redirect("/");
+        }
+        res.status(403);
+        //res.send("password doesn't match ! ");
+      }
+    }
+    res.status(403);
+  } else {
+    res.status(403);
+    res.send("please fill email and password ! ");
+  }
+});
+
+app.get("/logout", (req, res) => {
+  res.clearCookie('user_id');
   res.redirect("/");
 });
 
-app.post("/logout", (req, res) => {
-  res.clearCookie('username');
-  //res.cookie("username",req.body.userName);
-  res.redirect("/");
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+const emailExists = email => {
+  // check all users emails and see if new email is part of it
+  for (user in users) {
+    if (users[user].email === email) {
+      return true;
+    }
+  }
+}
+
+app.post("/register", (req, res) => {
+  const { email, password } = req.body;
+  // validations (does password have 8 chars)
+  if (email && password) {
+    if (emailExists(email,false)) {
+      res.status(400);
+      res.send("email exists!");
+    } else {
+      const id = generateRandomString();
+      users[id] = { id, email, password };
+      res.cookie("user_id", id);
+      res.redirect("/");
+    }
+  } else {
+      res.status(404);
+      res.send('Not found');
+  }
+
 });
 
 app.listen(PORT, () => {

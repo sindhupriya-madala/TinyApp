@@ -5,7 +5,7 @@
 </head>
 <body>
   <header> <% include partials/_header %> </header>
-  <ul>
+    <ul>
     <% Object.keys(urls).forEach((key) => { %>
       <li>
         <a id = "keyvalue" href = "<%= key %>"> <%= key %> </a> : <%= urls[key] %>
@@ -16,5 +16,6 @@
       </li>
     <% }) %>
   </ul>
+
 </body>
 </html>
