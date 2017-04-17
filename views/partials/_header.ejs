@@ -3,12 +3,13 @@
     <title> Login Page </title>
   </head>
   <body>
-    <h1> This is Header </h1>
-      <% if(user) { %>
-        <a href = "/logout" %> style = "padding : 50px"> Logout </a>
-      <% } else { %>
-        <a href = "/register" %> style = "padding : 50px"> Register </a>
-        <a href = "/login" style = "padding : 50px"> Login </a>
-      <% } %>
+    <% if(user) { %>
+      <h4 style = "padding : 20px 10px"> <%= user.email %> </h4>
+      <a href="/urls" style = "padding : 20px 10px"> My URL's </a>
+      <a href = "/logout" %> style = "padding : 15px 15px"> Logout </a>
+    <% } else { %>
+      <a href = "/register" %> style = "padding : 15px 15px"> Register </a>
+      <a href = "/login" style = "padding : 15px 15px"> Login </a>
+    <% } %>
   </body>
 </html>

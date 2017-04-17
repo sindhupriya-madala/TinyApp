@@ -4,9 +4,7 @@
     <title>TinyApp</title>
   </head>
   <body>
-    <header> <% include partials/_header %> </header>
-    <ul>
-      <li><a href = "<%= shortURL %>" > <%= shortURL %> </a> : <%= lURL %></li>
+    <li><a href = "<%= shortURL %>" > <%= shortURL %> </a> : <%= lURL %></li>
       <input id="newURL" name = "newURL" type="text" placeHolder="http://" style= "width:300px padding:50px">
       <form action="/urls/<%= shortURL %>" method="POST">
         <button> Update </button>

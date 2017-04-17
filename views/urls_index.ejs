@@ -6,16 +6,18 @@
 <body>
   <header> <% include partials/_header %> </header>
     <ul>
-    <% Object.keys(urls).forEach((key) => { %>
-      <li>
-        <a id = "keyvalue" href = "<%= key %>"> <%= key %> </a> : <%= urls[key] %>
-        <form action="/urls/<%= key %>/delete" method="POST">
-          <button align="right"> Delete </button>
-          <a href=" " align="left"> edit </a>
-        </form>
-      </li>
-    <% }) %>
+      <% Object.keys(urlDB).forEach((shorturl) => { %>
+          <li>
+            <a id = "keyvalue" href = "<%= urlDB[shorturl] %>"> <%= shorturl %> </a>  : <%= urlDB[shorturl] %>
+            <form action="/urls/<%= shorturl %>/delete" method="POST">
+              <button> Delete </button>
+            </form>
+            <form action="/urls/<%= shorturl %>/edit" method="GET">
+              <button> Edit </button>
+            </form>
+          </li>
+      <% }) %>
   </ul>
-
+  <a href = "/urls/new" %> style = "padding : 15px 15px"> Create New Short Link </a>
 </body>
 </html>
