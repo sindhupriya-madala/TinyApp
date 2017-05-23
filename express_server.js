@@ -1,5 +1,4 @@
 const express = require("express");
-//const cookieParser = require('cookie-parser')
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
 const cookieSession = require('cookie-session');
@@ -8,14 +7,13 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(bodyParser.urlencoded({extended: true}));
-//app.use(cookieParser());
 app.use(cookieSession({
   name: 'session',
   keys: ['asd', 'zxc'],
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
+
 app.use((req, res, next) => {
-  //const userId = req.cookies.user_id;
   const userId = req.session.user_id;
   req.user = users[userId];
   next();
@@ -26,15 +24,6 @@ let urlDatabase = {
   "userRandomID":{ "b2xVn2": "http://www.lighthouselabs.ca"},
   "user2RandomID":{ "9sm5xK": "http://www.google.com"}
 };
-
-function checkURLDatabase(shortURL) {
-  for(let userid in urlDatabase) {
-    if(Object.keys(urlDatabase[userid]) == shortURL) {
-      return true;
-    }
-  }
-  return false;
-}
 
 const users = {
   "userRandomID": {
@@ -48,6 +37,16 @@ const users = {
     password: "dishwasher-funk"
   }
 }
+
+function checkURLDatabase(shortURL) {
+  for(let userid in urlDatabase) {
+    if(Object.keys(urlDatabase[userid]) == shortURL) {
+      return true;
+    }
+  }
+  return false;
+}
+
 //function for generating string of 6 random characters.
 function generateRandomString() {
 var text = "";
@@ -81,7 +80,6 @@ app.get("/urls", (req,res) => {
     res.render('link-to-login');
   }
 });
-
 
 // express get when client hit url '/urls/new'
 app.get("/urls/new", (req, res) => {
@@ -144,6 +142,7 @@ app.get("/u/:shortURL", (req, res) => {
   for(let urlsOfUser in urlDatabase) {
     Object.keys(urlDatabase[urlsOfUser]).forEach((key) => {
       if(req.params.shortURL == key) {
+        x = 1;
         let longURL = urlDatabase[urlsOfUser][key];
         res.redirect(`${longURL}`);
       }
@@ -155,16 +154,12 @@ app.get("/u/:shortURL", (req, res) => {
 //POST for deleting a url from urls page.
 app.post("/urls/:id/delete", (req, res) => {
   let key = req.params.id;
-  console.log("key -", key);
-  console.log("urldatabase -", urlDatabase[req.user.id][key]);
   delete urlDatabase[req.user.id][key];
   res.redirect('/urls');
 });
 
 app.get("/urls/:id/edit", (req, res) => {
   let key = req.params.id;
-  console.log("key -", key);
-  console.log("urldatabase -", urlDatabase[req.user.id][key]);
   res.render("url-update",{shortURL : key});
 });
 
@@ -172,22 +167,17 @@ app.post("/urls/:id/edit", (req, res) => {
   let key = req.params.id;
   let longURL = req.body.longURL;
   longURL = prepareLongURL(longURL);
-  console.log("from urls edit post method : ",longURL);
-  console.log("key -", key);
-  console.log("urldatabase -", urlDatabase[req.user.id][key]);
   urlDatabase[req.user.id][key] = longURL;
   res.redirect('/urls');
 });
 
 app.post("/urls/:id", (req, res) => {
   let newURL = req.body.newURL;
-  console.log(newURL);
   urlDatabase[req.params.id] = newURL;
   res.redirect('/urls');
 });
 
 app.get("/login", (req, res) => {
-  console.log("hello in login get");
   res.render("login.ejs");
 });
 
@@ -203,7 +193,7 @@ app.post("/login", (req, res) => {
         res.status(403);
       }
     }
-    res.render('error',{statusCode : 404, redirect : "register"});
+    res.render('error',{statusCode : 401});
   } else {
     res.status(403);
     res.send("please fill email and password ! ");
@@ -239,7 +229,6 @@ app.post("/register", (req, res) => {
       const id = generateRandomString();
       users[id] = { id, email, password };
       urlDatabase[id] = {};
-      console.log(id);
       req.session.user_id = id;
       res.redirect("/urls");
     }

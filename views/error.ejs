@@ -3,12 +3,10 @@
     <title> Not Found! </title>
   </head>
   <body>
-    <% if(statusCode === 404) { %>
-      <% if(redirect === "register") { %>
-        <h3> No Login Details Found... Please Register!</h3>
-      <% } else { %>
-        <h3> Given Short URL Doesn't Exist in Database</h3>
-      <% } %>
+    <% if(statusCode === 401) { %>
+      <h3> No Login Details Found... Please Register!</h3>
+    <% } else if(statusCode === 404) { %>
+       <h3> Given Short URL Doesn't Exist in Database</h3>
     <% } else if(statusCode === 403) { %>
       <h3> Given URL Doesn't Match with the users Saved URL's</h3>
     <% } %>
