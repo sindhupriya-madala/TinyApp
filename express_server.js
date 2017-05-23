@@ -96,7 +96,6 @@ app.get("/urls/:id", (req, res) => {
   //templateVars contains shortURL from request parameters and corresponding
   //longURL from urlDatabase.
   const shortURL= req.params.id;
-  console.log(shortURL);
   if(checkURLDatabase(shortURL)) {
     if(req.user) {
       if(Object.keys(urlDatabase[req.user.id]) == shortURL) {
@@ -128,12 +127,9 @@ function prepareLongURL(longURL) {
 }
 //POST
 app.post("/abcd", (req, res) => {
-  console.log(req.body.longURL);
   let shortURL = generateRandomString();
   let longURL = req.body.longURL;
   longURL = prepareLongURL(longURL);
-  console.log(req.user.id);
-  console.log(urlDatabase[req.user.id]);
   urlDatabase[req.user.id][""+shortURL] =  longURL;
   res.redirect('/urls');
 });
