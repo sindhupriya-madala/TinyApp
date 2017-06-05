@@ -30,4 +30,5 @@ The Tiny URL generated using this app is a random string of length 6.
   
   As a twitter reader, I want to be able to visit sites via shortened links, so that I can read interesting content.
 
-  * When I visit a short link Then I am redirected to the page corresponding to the short URL's original URL
+  * When I visit a short link Then I am redirected to the page corresponding to the short URL's original URL.
+  
