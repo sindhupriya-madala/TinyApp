@@ -1,0 +1,31 @@
+input {
+  padding: 10px;
+  margin: 10px; 
+  width: 80%;
+  text-align: center;
+  background-color: lightgoldenrodyellow;
+}
+button {
+  width: 100px;
+  padding: 10px;
+  margin: 10px;;
+  background-color: lightgray;
+  color: blue
+}
+h1{
+  color: blue;
+  padding: 10px;
+  margin: 10px;
+  color: lightgoldenrodyellow;
+}
+div{
+  width: 30%;
+  height: 30%;
+  color: blue;
+  margin-left: 35%;
+  margin-top: 10%;
+  text-align: center;
+}
+body{
+  background-image: url(../images/background.jpg);
+}

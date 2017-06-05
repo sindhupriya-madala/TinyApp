@@ -1,0 +1,13 @@
+body {
+  text-align: center;
+  background-image: url(../images/background.jpg);
+}
+
+h4{
+  color: lightgoldenrodyellow;
+}
+
+a{
+  color: lightsalmon;
+  margin: 20px 10px;
+}

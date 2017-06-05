@@ -1,17 +1,15 @@
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="/styles/login.css" />
   </head>
   <body>
       <form action="/login" method="POST" style="margin:20px">
-        <br>
-          <label for="userName" align = "left">Enter UserName : </label>
-          <input type=email name=email style="width = 100px">
-        </br>
-        <br>
-          <label>Enter Password : </label>
-          <input type=password name=password style="width = 100px"> </li>
-        </br>
-        <br> <button id="submit"> Submit </button> </br>
+      <div>
+        <h1> Login </h1>
+        <input type=email name=email placeholder="Enter Email">
+        <input type=password name=password placeholder="Password" > 
+        <button id="submit"> Submit </button>
+      </div>
       </form>
   </body>
 </html>

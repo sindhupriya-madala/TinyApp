@@ -1,0 +1,26 @@
+body{
+  text-align: center;
+  font-size: 20px;
+}
+input{
+  padding: 10px;
+  margin: 10px; 
+  margin-top: 30px;
+  width: 80%;
+  text-align: center;
+}
+div{
+  width: 30%;
+  height: 30%;
+  color: blue;
+  margin-left: 35%;
+  margin-top: 10%;
+  text-align: center;
+}
+button {
+  width: 100px;
+  padding: 10px;
+  margin: 10px;;
+  background-color: lightgray;
+  color: blue
+}

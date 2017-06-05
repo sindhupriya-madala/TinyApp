@@ -2,22 +2,24 @@
 <html lang='en'>
 <head>
   <title>TinyApp</title>
+  <link rel="stylesheet" type="text/css" href="/styles/urls_index.css" />
 </head>
 <body>
-  <header> <% include partials/_header %> </header>
-    <ul>
-      <% Object.keys(urlDB).forEach((shorturl) => { %>
-          <li>
-            <a id = "keyvalue" href = "<%= urlDB[shorturl] %>"> <%= shorturl %> </a>  : <%= urlDB[shorturl] %>
-            <form action="/urls/<%= shorturl %>/delete" method="POST">
-              <button> Delete </button>
-            </form>
-            <form action="/urls/<%= shorturl %>/edit" method="GET">
-              <button> Edit </button>
-            </form>
-          </li>
-      <% }) %>
-  </ul>
-  <a href = "/urls/new" %> style = "padding : 15px 15px"> Create New Short Link </a>
+  <div>
+    <header> <% include partials/_header %> </header>
+    <% Object.keys(urlDB).forEach((shorturl) => { %>
+      <div class="div1"> 
+        <a id = "keyvalue" href = "<%= urlDB[shorturl] %>"> <%= shorturl %> </a>  
+        <span> : <%= urlDB[shorturl] %> </span>
+        <form action="/urls/<%= shorturl %>/delete" method="POST">
+          <button> Delete </button>
+        </form>
+        <form action="/urls/<%= shorturl %>/edit" method="GET">
+          <button> Edit </button>
+        </form>
+      </div>
+    <% }) %>
+    <a href = "/urls/new" %>> Create New Short Link </a>
+  </div>
 </body>
 </html>

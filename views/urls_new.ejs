@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang='en'>
   <head>
+    <link rel="stylesheet" type="text/css" href="/styles/urls_new.css" />
   </head>
-  <body style="font-size : 20px; padding : 50px;">
+  <body>
+    <div>
     <header> <% include partials/_header %> </header>
-    <form action="/abcd" method="POST" style="margin:150px;">
-      <label for="longURL">Enter a URL : </label>
-      <input id="longURL" type="text" name="longURL" placeholder="http://" style="width : 300px">
-      <input type="submit" value="Submit">
+    <form action="/abcd" method="POST">
+      <input id="longURL" type="text" name="longURL" placeholder="Enter Long URL you want to save ">
+      <button type="submit" value="Submit">Submit </button>
     </form>
+    </div>
   </body>
 <html>

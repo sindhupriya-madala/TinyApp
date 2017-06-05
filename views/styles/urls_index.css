@@ -1,0 +1,21 @@
+.div1{
+  padding: 10px;
+  margin-bottom: 20px;
+}
+div{
+  width: 50%;
+  height: 30%;
+  color: lightgoldenrodyellow;
+  margin-left: 25%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  text-align: center;
+}
+form{
+  width: 40%;
+  margin: auto;
+}
+
+a {
+  margin-top: 20px;
+}

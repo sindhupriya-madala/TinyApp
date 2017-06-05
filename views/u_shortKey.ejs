@@ -5,7 +5,7 @@
   </head>
   <body>
     <li><a href = "<%= shortURL %>" > <%= shortURL %> </a> : <%= lURL %></li>
-      <input id="newURL" name = "newURL" type="text" placeHolder="http://" style= "width:300px padding:50px">
+      <input id="newURL" name = "newURL" type="text" placeHolder="http://" style= "width:300px ; padding:50px">
       <form action="/urls/<%= shortURL %>" method="POST">
         <button> Update </button>
       </form>
