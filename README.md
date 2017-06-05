@@ -16,6 +16,10 @@ The Tiny URL generated using this app is a random string of length 6.
   
   ![registeration](https://github.com/sindhupriya-madala/TinyApp/blob/master/views/images/register.jpg)
   
+  * If you already registered you can use login page http://localhost:8080/login
+  
+  ![login](https://github.com/sindhupriya-madala/TinyApp/blob/master/views/images/login.jpg)
+  
   * After Registration it opens the url's index page.
   
   ![index](https://github.com/sindhupriya-madala/TinyApp/blob/master/views/images/urls-index.jpg)
