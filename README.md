@@ -10,4 +10,12 @@ The Tiny URL generated using this app is a random string of length 6.
 ```
   Run `npm install` to install the dependencies.
   
-
+  command to run server is `node express_server.js`
+  
+  * When I visit http://localhost:8080/ it redirects me to registration page.
+  
+  ![registeration](https://github.com/sindhupriya-madala/TinyApp/blob/master/views/images/register.jpg)
+  
+  * After Registration it opens the url's index page.
+  
+  ![index]()
